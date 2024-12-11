@@ -18,17 +18,21 @@ class Crypto:
 
 currency = input("Input currency (default is USD): ") or "USD"
 print(f"You selected: {currency}")
+value_digits_input = input(
+    "Input how many value digits you'd like (default is 2): ")
+value_digits = int(value_digits_input) if value_digits_input.strip() else 2
+
 
 url_multifull = f"https://min-api.cryptocompare.com/data/pricemultifull?fsyms=XRP&tsyms={currency}"
 response = requests.get(url_multifull)
 data = response.json()
 
-raw_data = data.get('RAW', {}).get('XRP', {}).get(currency, {})
-_price = raw_data.get('PRICE')
-_market_cap = raw_data.get('MKTCAP')
-_current_supply = raw_data.get('CIRCULATINGSUPPLY')
-_volume24 = raw_data.get('VOLUME24HOUR')
-_total_supply = raw_data.get('SUPPLY')
+raw_data = (data.get('RAW', {}).get('XRP', {}).get(currency, {}))
+_price = round(raw_data.get('PRICE'), value_digits)
+_market_cap = round(raw_data.get('MKTCAP'), value_digits)
+_current_supply = round(raw_data.get('CIRCULATINGSUPPLY'), value_digits)
+_volume24 = round(raw_data.get('VOLUME24HOUR'), value_digits)
+_total_supply = round(raw_data.get('SUPPLY'), value_digits)
 
 crypto = Crypto(_price, _market_cap, _current_supply, _volume24, _total_supply)
 
