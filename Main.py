@@ -1,3 +1,6 @@
+import requests
+from pprint import pprint
+
 
 class Crypto:
     def __init__(self, price, market_cap, current_supply, volume24, total_supply):
@@ -11,3 +14,11 @@ class Crypto:
         return (f"Price: {self._price}, Market Cap: {self._market_cap}, "
                 f"Current Supply: {self._current_supply}, Volume (24h): {self._volume24}, "
                 f"Total Supply: {self._total_supply}")
+
+
+#test
+url_multifull = f"https://min-api.cryptocompare.com/data/pricemultifull?fsyms=XRP&tsyms=usd"
+response = requests.get(url_multifull)
+data = response.json()
+pprint(data)
+
