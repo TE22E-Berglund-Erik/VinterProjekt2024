@@ -16,9 +16,19 @@ class Crypto:
                 f"Total Supply: {self._total_supply}")
 
 
-#test
-url_multifull = f"https://min-api.cryptocompare.com/data/pricemultifull?fsyms=XRP&tsyms=usd"
+url_multifull = f"https://min-api.cryptocompare.com/data/pricemultifull?fsyms=XRP&tsyms=USD"
 response = requests.get(url_multifull)
 data = response.json()
 pprint(data)
 
+raw_data = data.get('RAW', {}).get('XRP', {}).get('USD', {})
+
+_price = raw_data.get('PRICE')
+_market_cap = raw_data.get('MKTCAP')
+_current_supply = raw_data.get('CIRCULATINGSUPPLY')
+_volume24 = raw_data.get('VOLUME24HOUR')
+_total_supply = raw_data.get('SUPPLY')
+
+crypto = Crypto(_price, _market_cap, _current_supply, _volume24, _total_supply)
+
+print(crypto)
