@@ -1,2 +1,0 @@
-göra forloop så man kan ta flera currencys, {currency}, fsyms=BTC,ETH
-
