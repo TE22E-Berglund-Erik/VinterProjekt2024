@@ -2,14 +2,15 @@ import requests
 import Portfolio
 
 class Crypto(Portfolio):
-    def __init__(self, price, market_cap, current_supply, volume24, total_supply):
-        super().__init__(price, market_cap)
+    def __init__(self, price, market_cap, current_supply, volume24, total_supply, quantity):
+        super().__init__(price, quantity, market_cap)
         self._current_supply = current_supply
         self._volume24 = volume24
         self._total_supply = total_supply
 
+    
     def get_current_supply(self):
-        return self._price * self._current_supply
+        return self.price * self._current_supply
 
     def __str__(self):
         return (super().__str__() +
@@ -34,7 +35,6 @@ class Crypto(Portfolio):
         _current_supply = round(raw_data.get('CIRCULATINGSUPPLY'), value_digits)
         _volume24 = round(raw_data.get('VOLUME24HOUR'), value_digits)
         _total_supply = round(raw_data.get('SUPPLY'), value_digits)
-
         crypto = Crypto(_price, _market_cap, _current_supply, _volume24, _total_supply)
-
+        
         print(crypto)

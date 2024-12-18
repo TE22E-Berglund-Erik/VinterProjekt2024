@@ -5,9 +5,9 @@ from Portfolio import Portfolio
 class Stock(Portfolio):
     def __init__(self, ticker, quantity):
         self.ticker = ticker
-        self._quantity = quantity
         
-        super().__init__(price=0, market_cap=0)
+
+        super().__init__(price=0, market_cap=0, quantity=0)
         self._price, self._market_cap = self.fetch_stock_data()
 
     def fetch_stock_data(self):
