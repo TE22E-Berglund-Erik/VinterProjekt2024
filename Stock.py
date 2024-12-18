@@ -1,9 +1,9 @@
 import yfinance as yf
-from Portfolio import Portfolio
+from Portfolio import Portfolio_class
 
 
-class Stock(Portfolio):
-    def __init__(self, ticker, quantity):
+class Calc_Stock(Portfolio_class):
+    def __init__(self, ticker):
         self.ticker = ticker
         
 
