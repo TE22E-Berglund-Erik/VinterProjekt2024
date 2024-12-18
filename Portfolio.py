@@ -1,12 +1,14 @@
 class Portfolio_class:
-    def __init__(self, price, quantity, market_cap=None):
+    def __init__(self, price=0, quantity=0, market_cap=None, currency="USD"):
         self._price = price
         self._quantity = quantity
         self._market_cap = market_cap
+        self._currency = currency
+        self.assets = []
 
     def __str__(self):
-        return (f"Portfolio: Price = {self._price}, Quantity = {self._quantity}")
-    
+        return f"Portfolio: Price = {self._price}, Quantity = {self._quantity}"
+
     def total_value(self):
         return self._price * self._quantity
 
@@ -15,3 +17,55 @@ class Portfolio_class:
 
     def update_quantity(self, new_quantity):
         self._quantity = new_quantity
+
+    def add_asset(self, asset):
+        self.assets.append(asset)
+
+    def print_portfolio(self):
+        if not self.assets:
+            print("Your portfolio is empty!")
+            return
+        total_value = sum(asset.total_value() for asset in self.assets)
+        print(f"\nPortfolio ({self._currency}):")
+        for asset in self.assets:
+            print(asset)
+        print(f"Total Value: {total_value} {self._currency}")
+
+    def manage_portfolio(self):
+        self._currency = input("Enter your currency (default USD): ") or "USD"
+
+        while True:
+            print("\n1. Add a Stock")
+            print("2. Add a Crypto")
+            print("3. View Portfolio")
+            print("4. Exit")
+            choice = input("Choose an option: ")
+
+            if choice == "1":
+                from Stock import Calc_Stock
+                symbol = input("Enter stock ticker: ")
+                stock = Calc_Stock(symbol)
+                quantity = float(input("Enter quantity: "))
+                stock.update_quantity(quantity)
+                self.add_asset(stock)
+                print(f"Added {symbol} with a value of {stock._price} {self._currency}!")
+
+            elif choice == "2":
+                from Crypto import Calc_Crypto
+                symbol = input("Enter crypto symbol: ")
+                crypto = Calc_Crypto.run_crypto(symbol, self._currency)
+                if crypto:
+                    quantity = float(input("Enter quantity: "))
+                    crypto.update_quantity(quantity)
+                    self.add_asset(crypto)
+                    print(f"Added {symbol} with a value of {crypto._price} {self._currency}!")
+
+            elif choice == "3":
+                self.print_portfolio()
+
+            elif choice == "4":
+                print("Goodbye!")
+                break
+
+            else:
+                print("Invalid option, try again.")
