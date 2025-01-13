@@ -23,13 +23,13 @@ class Portfolio_class:
 
     def print_portfolio(self):
         if not self.assets:
-            print("Your portfolio is empty!")
+            print("\nYour portfolio is empty!")
             return
         total_value = sum(asset.total_value() for asset in self.assets)
         print(f"\nPortfolio ({self._currency}):")
         for asset in self.assets:
             print(asset)
-        print(f"Total Value: {total_value} {self._currency}")
+        print(f"Total Value: {round((total_value),2)} {self._currency}")
 
     def manage_portfolio(self):
         self._currency = input("Enter your currency (default USD): ") or "USD"
@@ -45,20 +45,22 @@ class Portfolio_class:
                 from Stock import Calc_Stock
                 symbol = input("Enter stock ticker: ")
                 stock = Calc_Stock(symbol)
+                print(f"{stock._name} are currently going for {stock._price} {self._currency}")
                 quantity = float(input("Enter quantity: "))
                 stock.update_quantity(quantity)
                 self.add_asset(stock)
-                print(f"Added {symbol} with a value of {stock._price} {self._currency}!")
+                print(f"Added {symbol.upper()} with a total value of {stock._price*quantity} {self._currency}!")
 
             elif choice == "2":
                 from Crypto import Calc_Crypto
                 symbol = input("Enter crypto symbol: ")
                 crypto = Calc_Crypto.run_crypto(symbol, self._currency)
                 if crypto:
+                    print(f"{symbol} are currently going for {crypto._price} ")
                     quantity = float(input("Enter quantity: "))
                     crypto.update_quantity(quantity)
                     self.add_asset(crypto)
-                    print(f"Added {symbol} with a value of {crypto._price} {self._currency}!")
+                    print(f"Added {symbol.upper()} with a total value of {crypto._price*quantity} {self._currency}!")
 
             elif choice == "3":
                 self.print_portfolio()
