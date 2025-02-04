@@ -1,21 +1,14 @@
 import requests
 
-def convert_currency(amount, from_currency, to_currency):
-    url = f"https://api.exchangerate-api.com/v4/latest/{from_currency}"
-    response = requests.get(url)
-    data = response.json()
+class CurrencyConverter:
+    api_url = "https://api.exchangerate-api.com/v4/latest/"
     
-    if to_currency in data["rates"]:
-        rate = data["rates"][to_currency]
-        converted_amount = amount * rate
-        return converted_amount
-    else:
-        return "Valutan hittades inte."
+    @staticmethod
+    def convert(amount, from_currency, to_currency):
+        response = requests.get(f"{CurrencyConverter.api_url}{from_currency}")
+        rates = response.json()["rates"]
+        return amount * rates[to_currency]
 
-# Exempelanvändning
-amount = 100
-from_currency = "USD"
-to_currency = "EUR"
-
-converted = convert_currency(amount, from_currency, to_currency)
-print(f"{amount} {from_currency} är {converted:.2f} {to_currency}")
+if __name__ == "__main__": 
+    result = CurrencyConverter.convert(100, "USD", "SEK")  
+    print(result)
