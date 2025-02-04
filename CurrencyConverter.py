@@ -1,9 +1,17 @@
 import requests
-import pprint
 
 class CurrencyConverter:
-   
-            response = requests.get(f"https://api.exchangerate-api.com/v4/latest/USD")
-            response.raise_for_status()
-            data = response.json()
-            pprint.pprint(data)
+    def __init__(self):
+        self.api_url = "https://api.exchangerate-api.com/v4/latest/"
+    
+    def convert(self, amount, from_currency, to_currency):
+        rates = requests.get(f"{self.api_url}{from_currency}").json().get("rates")
+        return amount * rates.get(to_currency)
+    
+    
+if __name__ == "__main__":
+    converter = CurrencyConverter()  
+    result = converter.convert(100, "USD", "SEK")  
+    print(result)
+
+

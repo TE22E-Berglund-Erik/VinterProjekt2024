@@ -1,3 +1,7 @@
+from PyCurrency_Converter import convert
+import urllib
+
+
 class Portfolio_class:
     def __init__(self, price=0, quantity=0, market_cap=None, currency="USD"):
         self._price = price

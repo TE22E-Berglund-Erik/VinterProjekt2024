@@ -1,5 +1,8 @@
 from Portfolio import Portfolio_class
+from currency_converter import CurrencyConverter
 
 
 if __name__ == "__main__":
-    Portfolio_class().manage_portfolio()
+    converter = CurrencyConverter("USD")
+    result = converter.convert(100, "EUR")
+    print(result)
