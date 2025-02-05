@@ -1,6 +1,4 @@
-from PyCurrency_Converter import convert
-import urllib
-
+from CurrencyConverter import CurrencyConverter
 
 class Portfolio_class:
     def __init__(self, price=0, quantity=0, market_cap=None, currency="USD"):
@@ -47,8 +45,9 @@ class Portfolio_class:
 
             if choice == "1":
                 from Stock import Calc_Stock
-                symbol = input("Enter stock ticker: ")
+                symbol = input("Enter stock ticker: ").upper()
                 stock = Calc_Stock(symbol)
+                stock._price= CurrencyConverter.convert(stock._price, "USD", self._currency)
                 print(f"{stock._name} are currently going for {stock._price} {self._currency}")
                 quantity = float(input("Enter quantity: "))
                 stock.update_quantity(quantity)
@@ -57,7 +56,7 @@ class Portfolio_class:
 
             elif choice == "2":
                 from Crypto import Calc_Crypto
-                symbol = input("Enter crypto symbol: ")
+                symbol = input("Enter crypto symbol: ").upper()
                 crypto = Calc_Crypto.run_crypto(symbol, self._currency)
                 if crypto:
                     print(f"{symbol} are currently going for {crypto._price} ")
