@@ -31,7 +31,7 @@ class Portfolio_class:
         print(f"\nPortfolio ({self._currency}):")
         for asset in self.assets:
             print(asset)
-        print(f"Total Value: {round((total_value),2)} {self._currency}")
+        print(f"Total Value: {round((total_value),2):,.2f} {self._currency}")
 
     def manage_portfolio(self):
         self._currency = input("Enter your currency (default USD): ") or "USD"
@@ -48,22 +48,22 @@ class Portfolio_class:
                 symbol = input("Enter stock ticker: ").upper()
                 stock = Calc_Stock(symbol)
                 stock._price= CurrencyConverter.convert(stock._price, "USD", self._currency)
-                print(f"{stock._name} are currently going for {stock._price} {self._currency}")
+                print(f"{stock._name} are currently going for {stock._price:,.2f} {self._currency}")
                 quantity = float(input("Enter quantity: "))
                 stock.update_quantity(quantity)
                 self.add_asset(stock)
-                print(f"Added {symbol.upper()} with a total value of {stock._price*quantity} {self._currency}!")
+                print(f"Added {symbol.upper()} with a total value of {stock._price*quantity:,.2f} {self._currency}!")
 
             elif choice == "2":
                 from Crypto import Calc_Crypto
                 symbol = input("Enter crypto symbol: ").upper()
                 crypto = Calc_Crypto.run_crypto(symbol, self._currency)
                 if crypto:
-                    print(f"{symbol} are currently going for {crypto._price} ")
+                    print(f"{symbol} are currently going for {crypto._price:,.2f} ")
                     quantity = float(input("Enter quantity: "))
                     crypto.update_quantity(quantity)
                     self.add_asset(crypto)
-                    print(f"Added {symbol.upper()} with a total value of {crypto._price*quantity} {self._currency}!")
+                    print(f"Added {symbol.upper()} with a total value of {crypto._price*quantity:,.2f} {self._currency}!")
 
             elif choice == "3":
                 self.print_portfolio()
